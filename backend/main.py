@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.query import query_router
 from routes.feedback import feedback_router
-import uvicorn
+
 
 app = FastAPI(title="Math Routing Agent")
 
@@ -31,7 +31,3 @@ from core.knowledge_base import setup_knowledge_base
 def startup_event():
     setup_knowledge_base()
 
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Render injects PORT
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
