@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "question": "What is the derivative of x^2?",
+    "answer": "The derivative of x^2 is 2x."
+  },
+  {
+    "id": "2",
+    "question": "Integrate x dx",
+    "answer": "The integral of x dx is (1/2)x^2 + C."
+  },
+  {
+    "id": "3",
+    "question": "What is the limit of (x^2 - 1)/(x - 1) as x approaches 1?",
+    "answer": "Use L'Hospital's Rule: derivative of numerator = 2x, denominator = 1. So the limit is 2."
+  }
+]
