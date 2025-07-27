@@ -1,4 +1,4 @@
-# 🧠 Math Routing Agent
+# 🧠 AlgeMentor (Math Routing Agent)
 An AI-powered system that intelligently routes math queries through specialized modules using an Agentic RAG architecture with feedback loops, vector search, and web augmentation. Designed for adaptive math assistance.
 
 ---
@@ -48,7 +48,7 @@ An AI-powered system that intelligently routes math queries through specialized 
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/math-routing-agent.git
+git clone https://github.com/AdityaSrivastavDS/AlgeMentor
 cd math-routing-agent/backend
 
 # Recommended: Create a virtual environment
@@ -63,6 +63,10 @@ pip install tf-keras
 
 # Start the FastAPI server
 uvicorn main:app --reload
+
+#Start the React Development 
+cd frontend
+npm build
 ```
 --- 
 
