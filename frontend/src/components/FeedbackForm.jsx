@@ -7,33 +7,20 @@ function FeedbackForm({ question, answer }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!rating) return;
 
-    if (!rating) return alert("Please select a rating.");
+    await fetch("http://localhost:8000/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        question,
+        answer,
+        rating: Number(rating),
+        comments,
+      }),
+    });
 
-    const payload = {
-      question,
-      answer,
-      rating: parseInt(rating), // ensure it's a number
-      comments,
-    };
-
-    try {
-      const res = await fetch("http://localhost:8000/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        setSent(true);
-      } else {
-        const data = await res.json();
-        alert(`Error: ${data.detail}`);
-      }
-    } catch (err) {
-      alert("Failed to submit feedback.");
-      console.error(err);
-    }
+    setSent(true);
   };
 
   return (
@@ -42,33 +29,32 @@ function FeedbackForm({ question, answer }) {
         <p>✅ Thanks for your feedback!</p>
       ) : (
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Rate the answer (1 to 5): </label>
-            <select value={rating} onChange={(e) => setRating(e.target.value)}>
-              <option value="">Select</option>
-              <option value="5">Excellent</option>
-              <option value="4">Good</option>
-              <option value="3">Average</option>
-              <option value="2">Poor</option>
-              <option value="1">Wrong/Unclear</option>
-            </select>
-          </div>
-          <div style={{ marginTop: "10px" }}>
-            <label>Comments (optional): </label>
-            <input
-              type="text"
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              style={{ width: "70%", padding: "5px" }}
-            />
-          </div>
-          <button type="submit" style={{ marginTop: "10px", padding: "6px 12px" }}>
-            Submit
+          <label>Rate the answer: </label>
+          <select value={rating} onChange={(e) => setRating(e.target.value)}>
+            <option value="">Select</option>
+            <option value="5">Correct</option>
+            <option value="3">Incomplete</option>
+            <option value="2">Unclear</option>
+            <option value="1">Wrong</option>
+          </select>
+
+          <br />
+          <label>Comments (optional): </label>
+          <input
+            type="text"
+            value={comments}
+            onChange={(e) => setComments(e.target.value)}
+            style={{ marginLeft: "10px", width: "60%" }}
+          />
+          <br />
+          <button type="submit" style={{ marginTop: "10px" }}>
+            Submit Feedback
           </button>
         </form>
       )}
     </div>
   );
 }
+
 
 export default FeedbackForm;

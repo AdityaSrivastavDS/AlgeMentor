@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from datetime import datetime
 import json
 import os
+import traceback
 
 feedback_router = APIRouter()
 
@@ -32,7 +33,12 @@ async def collect_feedback(feedback: FeedbackRequest):
                 json.dump([new_entry], f, indent=2)
         else:
             with open(FEEDBACK_FILE, "r+") as f:
-                data = json.load(f)
+                try:
+                    content = f.read().strip()
+                    data = json.loads(content) if content else []
+                except json.JSONDecodeError:
+                    data = []  # fallback
+
                 data.append(new_entry)
                 f.seek(0)
                 json.dump(data, f, indent=2)
@@ -40,4 +46,5 @@ async def collect_feedback(feedback: FeedbackRequest):
         return {"message": "Feedback recorded successfully."}
 
     except Exception as e:
+        print("[ERROR]:", traceback.format_exc())  # 🔥 Print full traceback
         raise HTTPException(status_code=500, detail=str(e))

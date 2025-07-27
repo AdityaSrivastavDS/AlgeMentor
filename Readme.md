@@ -66,7 +66,8 @@ uvicorn main:app --reload
 
 #Start the React Development 
 cd frontend
-npm build
+npm install
+npm start
 ```
 --- 
 
